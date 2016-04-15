@@ -1,0 +1,30 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_MANAGER:     ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_MANAGER]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: fos_userbundle
+                check_path: fos_user_security_login
+                login_path: fos_user_security_check
+            anonymous: true
+
+        #api:
+            #pattern:    ^/api
+            #fos_oauth:  true
+            #stateless:  true

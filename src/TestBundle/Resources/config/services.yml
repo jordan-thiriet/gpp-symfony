@@ -1,0 +1,4 @@
+services:
+    project.manager:
+        class: TestBundle\Manager\ProjectManager
+        arguments: ['@doctrine.orm.entity_manager', '@service_container', "TestBundle:Project"]

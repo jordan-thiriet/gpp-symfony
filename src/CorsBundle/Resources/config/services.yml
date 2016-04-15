@@ -1,0 +1,3 @@
+services:
+    cors.response.manager:
+        class: CorsBundle\Manager\ResponseManager
