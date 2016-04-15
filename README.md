@@ -7,6 +7,10 @@ composer.phar install
 ./bin/console gpp:install
 ```
 
+The install generate : 
+
+* 2 users ('admin', 'demo')
+
 ### Create Client oAuth
 ```
 ./bin/console gpp:client:create --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"
