@@ -4,7 +4,7 @@
 
 ```
 composer.phar install
-./bin/console doctrine:schema:update --force
+./bin/console gpp:install
 ```
 
 ### Create Client oAuth
