@@ -4,6 +4,7 @@ namespace CorsBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  *
@@ -42,20 +43,58 @@ abstract class BaseManager
      */
     protected $responseManager;
 
+    /**
+     * @var $request
+     */
+    protected $request;
+
+    /**
+     * @var array $query
+     */
+    protected $query;
+
+    /**
+     * @var array $query
+     */
+    protected $orderBy;
+
+    /**
+     * @var integer $limit
+     */
+    protected $limit;
+
+    /**
+     * @var integer $page
+     */
+    protected $page;
+
 
     /**
      * Manager constructor
      * @param EntityManager $em
      * @param Container $container
      */
-    public function __construct(EntityManager $em, Container $container, $repo)
+    public function __construct(EntityManager $em, Container $container,RequestStack $request, $repo)
     {
+        $this->request = $request->getCurrentRequest();
         $this->em = $em;
         $this->container = $container;
         $this->user = $this->container->get('security.token_storage')->getToken() === null ?:$this->container->get('security.token_storage')->getToken()->getUser();
         $this->isAdmin = $this->container->get('security.token_storage')->getToken() === null ?: $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
         $this->responseManager = $this->container->get('cors.response.manager');
         $this->repo = $repo;
+
+        // Get query
+        $query = json_decode($this->request->get('query'), true);
+        $this->query = $query ?: array();
+
+        // Get order by
+        $this->orderBy = json_decode($this->request->get('orderby'), true);
+
+        // Paginate
+        $this->limit = json_decode($this->request->get('limit'), true);
+        $page = json_decode($this->request->get('page'), true);
+        $this->page = $this->limit && $page ? $page * $this->limit : null;
 
     }
 
@@ -119,7 +158,8 @@ abstract class BaseManager
      */
     public function findOr404($id = '')
     {
-        $object = $this->getRepository()->find($id);
+        $query = array_merge(array("id"=>$id),$this->query);
+        $object = $this->getRepository()->findOneBy($query);
         if ($object === null)
             return false;
         return $object;
@@ -133,7 +173,7 @@ abstract class BaseManager
      */
     public function findAll()
     {
-        $object = $this->getRepository()->findAll();
+        $object = $this->getRepository()->findBy($this->query, $this->orderBy, $this->limit, $this->page);
         return $object;
     }
 

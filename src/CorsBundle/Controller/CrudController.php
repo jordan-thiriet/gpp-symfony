@@ -18,8 +18,10 @@ class CrudController extends FOSRestController
      */
     public function getAllAction($type)
     {
+        // Get data with query and orderby
         $objectManager = $this->get($type.'.manager');
         $objects = $objectManager->findAll();
+
         return $this->view($objects, Codes::HTTP_OK);
 
     }
