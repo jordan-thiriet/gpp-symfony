@@ -57,10 +57,10 @@ class InstallCommand extends ContainerAwareCommand
         $output->writeln('<info>Prepare database schema</info>');
         $connection = $this->getContainer()->get('doctrine')->getConnection();
 
-        if($connection->isConnected()) {
-            echo 'je passe';
+        if (in_array('symfony', $connection->getSchemaManager()->listDatabases())) {
             $this->commandExecutor->runCommand('doctrine:database:drop', array('--force' => true));
         }
+
         /*Création de la base de données*/
         $this->commandExecutor->runCommand('doctrine:database:create');
         if ($connection->isConnected()) {

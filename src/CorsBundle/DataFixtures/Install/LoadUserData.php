@@ -12,7 +12,7 @@ class LoadUserData implements FixtureInterface
     {
         $userAdmin = new User();
         $userAdmin->setUsername('admin');
-        $userAdmin->setPassword('@dm!n');
+        $userAdmin->setPlainPassword('@dm!n');
         $userAdmin->setFirstname('Admin');
         $userAdmin->setLastname('Admin');
         $userAdmin->setEmail('admin@gpp.io');
@@ -21,7 +21,7 @@ class LoadUserData implements FixtureInterface
 
         $userDemo = new User();
         $userDemo->setUsername('demo');
-        $userDemo->setPassword('demo');
+        $userDemo->setPlainPassword('demo');
         $userDemo->setFirstname('Demo');
         $userDemo->setLastname('Demo');
         $userDemo->setEmail('demo@gpp.io');

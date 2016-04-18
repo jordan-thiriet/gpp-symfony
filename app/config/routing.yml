@@ -1,17 +1,14 @@
-test:
-    resource: "@TestBundle/Controller/"
-    type:     annotation
-    prefix:   /
+user:
+    type:     rest
+    resource: UserBundle\Controller\UserController
+    prefix:   /api
 
 cors:
     type:     rest
     resource: CorsBundle\Controller\CrudController
     prefix:   /api
 
-user:
-    type:     rest
-    resource: UserBundle\Controller\UserController
-    prefix:   /api
+
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

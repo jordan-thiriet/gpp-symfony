@@ -24,7 +24,7 @@ security:
                 login_path: fos_user_security_check
             anonymous: true
 
-        #api:
-            #pattern:    ^/api
-            #fos_oauth:  true
-            #stateless:  true
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true

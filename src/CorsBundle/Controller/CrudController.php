@@ -64,6 +64,7 @@ class CrudController extends FOSRestController
     public function putAction(Request $request, $type, $id)
     {
         $objectManager = $this->get($type.'.manager');
+
         $object = $objectManager->findOr404($id);
 
         if($object === false) {
