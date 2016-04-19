@@ -82,5 +82,15 @@ class InstallCommand extends ContainerAwareCommand
 
         /*Load des fixtures dans le dossier DataFixtures*/
         $this->commandExecutor->runCommand('doctrine:fixtures:load', $params);
+
+        if(!is_dir('web/images')) {
+            $output->writeln('<info>Create folder images</info>');
+            mkdir ('web/images');
+        }
+
+        if(!is_dir('web/images/avatar')) {
+            $output->writeln('<info>Create folder avatar</info>');
+            mkdir('web/images/avatar');
+        }
     }
 }

@@ -15,3 +15,7 @@
 /vendor/
 /web/bundles/
 /.idea/workspace.xml
+/web/.DS_Store
+.DS_Store
+/web/images/avatar/*
+!web/images/avatar/avatar.png

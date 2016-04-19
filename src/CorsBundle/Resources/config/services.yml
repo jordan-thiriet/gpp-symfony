@@ -1,3 +1,5 @@
 services:
     cors.response.manager:
         class: CorsBundle\Manager\ResponseManager
+    cors.image.manager:
+        class: CorsBundle\Manager\ImageManager

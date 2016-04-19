@@ -43,4 +43,15 @@ class UserController extends FOSRestController
 
         return $this->view(null, Codes::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @Put("/user/upload-avatar", name="_postUploadAvatar")
+     */
+    public function postUploadAvatarAction(Request $request) {
+
+        $user = $this->getUser();
+        $imageManager = $this->get('cors.image.manager');
+        $imageManager->base64toImg('images/avatar/'.$user->getId().'.png', $request->get('picture'));
+        return $this->view(null, Codes::HTTP_NO_CONTENT);
+    }
 }
